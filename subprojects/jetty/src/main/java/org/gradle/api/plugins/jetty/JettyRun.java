@@ -22,10 +22,7 @@ import org.gradle.api.file.ConfigurableFileTree;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.plugins.jetty.internal.Jetty6PluginServer;
 import org.gradle.api.plugins.jetty.internal.JettyPluginServer;
-import org.gradle.api.tasks.InputDirectory;
-import org.gradle.api.tasks.InputFile;
-import org.gradle.api.tasks.InputFiles;
-import org.gradle.api.tasks.Optional;
+import org.gradle.api.tasks.*;
 import org.mortbay.jetty.Handler;
 import org.mortbay.jetty.Server;
 import org.mortbay.jetty.handler.ContextHandler;
@@ -270,7 +267,7 @@ public class JettyRun extends AbstractJettyRunTask {
                 Resource resource = getWebAppConfig().getBaseResource();
                 ResourceCollection rc = new ResourceCollection();
                 if (resource == null) {
-                    // nothing configured, so we automagically enable the overlays                    
+                    // nothing configured, so we automagically enable the overlays
                     int size = overlays.size() + 1;
                     Resource[] resources = new Resource[size];
                     resources[0] = Resource.newResource(getWebAppSourceDirectory().toURI().toURL());
@@ -294,7 +291,7 @@ public class JettyRun extends AbstractJettyRunTask {
                     } else {
                         // baseResource was already configured w/c could be src/main/webapp
                         if (!resource.isDirectory() && String.valueOf(resource.getFile()).endsWith(".war")) {
-                            // its a war                            
+                            // its a war
                             resource = Resource.newResource("jar:" + resource.getURL().toString() + "!/");
                         }
                         int size = overlays.size() + 1;
@@ -443,7 +440,7 @@ public class JettyRun extends AbstractJettyRunTask {
     /**
      * Returns the classpath for the web application.
      */
-    @InputFiles
+    @InputFiles(paths = FilePathMode.IGNORE)
     public FileCollection getClasspath() {
         return classpath;
     }

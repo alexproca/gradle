@@ -329,7 +329,7 @@ public class Test extends ConventionTask implements JavaForkOptions, PatternFilt
      * {@inheritDoc}
      */
     @Override
-    @Input
+    @InputFiles(paths = FilePathMode.IGNORE)
     public FileCollection getBootstrapClasspath() {
         return forkOptions.getBootstrapClasspath();
     }
@@ -994,7 +994,7 @@ public class Test extends ConventionTask implements JavaForkOptions, PatternFilt
     /**
      * Returns the classpath to use to execute the tests.
      */
-    @InputFiles
+    @InputFiles(paths = FilePathMode.IGNORE)
     public FileCollection getClasspath() {
         return classpath;
     }
