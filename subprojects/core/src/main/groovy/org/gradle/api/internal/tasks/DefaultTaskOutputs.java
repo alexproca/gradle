@@ -158,8 +158,8 @@ public class DefaultTaskOutputs implements TaskOutputsInternal {
     }
 
     @Override
-    public TaskOutputs files(final String property, final Object... paths) {
-        taskMutator.mutate("TaskOutputs.files(String, Object...)", new Runnable() {
+    public TaskOutputs includeFiles(final String property, final Object... paths) {
+        taskMutator.mutate("TaskOutputs.includeFiles(String, Object...)", new Runnable() {
             @Override
             public void run() {
                 addMultiplePropertyOutput(property, paths);
@@ -180,8 +180,8 @@ public class DefaultTaskOutputs implements TaskOutputsInternal {
     }
 
     @Override
-    public TaskOutputs file(final String property, final Object path) {
-        taskMutator.mutate("TaskOutputs.file(String, Object)", new Runnable() {
+    public TaskOutputs includeFile(final String property, final Object path) {
+        taskMutator.mutate("TaskOutputs.includeFile(String, Object)", new Runnable() {
             @Override
             public void run() {
                 addPropertyOutput(new OutputFileTaskPropertyOutput(property, path, resolver));
@@ -202,8 +202,8 @@ public class DefaultTaskOutputs implements TaskOutputsInternal {
     }
 
     @Override
-    public TaskOutputs dir(final String property, final Object path) {
-        taskMutator.mutate("TaskOutputs.dir(String, FileOrderMode, Object)", new Runnable() {
+    public TaskOutputs includeDir(final String property, final Object path) {
+        taskMutator.mutate("TaskOutputs.includeDir(String, FileOrderMode, Object)", new Runnable() {
             @Override
             public void run() {
                 addPropertyOutput(new OutputDirectoryTaskPropertyOutput(property, path, resolver));
