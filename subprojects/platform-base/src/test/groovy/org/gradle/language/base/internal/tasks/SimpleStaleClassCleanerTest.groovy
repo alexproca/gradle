@@ -15,7 +15,7 @@
  */
 package org.gradle.language.base.internal.tasks
 import org.gradle.api.file.FileCollection
-import org.gradle.api.internal.TaskOutputsInternal
+import org.gradle.api.internal.tasks.TaskOutputsInternal
 import org.gradle.test.fixtures.file.TestNameTestDirectoryProvider
 import org.junit.Rule
 import spock.lang.Specification
@@ -24,7 +24,7 @@ class SimpleStaleClassCleanerTest extends Specification {
     @Rule public final TestNameTestDirectoryProvider tmpDir = new TestNameTestDirectoryProvider()
     private final outputs = Mock(TaskOutputsInternal)
     private final SimpleStaleClassCleaner cleaner = new SimpleStaleClassCleaner(outputs)
-    
+
     def deletesAllPreviousOutputFiles() {
         def file1 = tmpDir.file('file1').createFile()
         def file2 = tmpDir.file('file2').createFile()

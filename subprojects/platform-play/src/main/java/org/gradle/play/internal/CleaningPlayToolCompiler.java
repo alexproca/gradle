@@ -16,7 +16,7 @@
 
 package org.gradle.play.internal;
 
-import org.gradle.api.internal.TaskOutputsInternal;
+import org.gradle.api.internal.tasks.TaskOutputsInternal;
 import org.gradle.api.tasks.WorkResult;
 import org.gradle.language.base.internal.compile.Compiler;
 import org.gradle.language.base.internal.tasks.SimpleStaleClassCleaner;

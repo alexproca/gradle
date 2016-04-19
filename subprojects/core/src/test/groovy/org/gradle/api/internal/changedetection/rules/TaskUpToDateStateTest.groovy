@@ -18,7 +18,7 @@ package org.gradle.api.internal.changedetection.rules
 
 import org.gradle.api.UncheckedIOException
 import org.gradle.api.internal.TaskInternal
-import org.gradle.api.internal.TaskOutputsInternal
+import org.gradle.api.internal.tasks.TaskOutputsInternal
 import org.gradle.api.internal.changedetection.state.*
 import org.gradle.api.internal.file.FileCollectionFactory
 import org.gradle.api.tasks.TaskInputs

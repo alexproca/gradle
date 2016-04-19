@@ -17,7 +17,7 @@ package org.gradle.api.internal.changedetection.changes
 
 import org.gradle.StartParameter
 import org.gradle.api.internal.TaskInternal
-import org.gradle.api.internal.TaskOutputsInternal
+import org.gradle.api.internal.tasks.TaskOutputsInternal
 import org.gradle.api.internal.changedetection.TaskArtifactState
 import org.gradle.api.internal.changedetection.TaskArtifactStateRepository
 import org.gradle.api.specs.Spec

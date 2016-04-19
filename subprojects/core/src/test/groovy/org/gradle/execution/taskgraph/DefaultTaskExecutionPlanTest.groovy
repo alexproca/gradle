@@ -20,7 +20,7 @@ import org.gradle.api.BuildCancelledException
 import org.gradle.api.CircularReferenceException
 import org.gradle.api.Task
 import org.gradle.api.internal.TaskInternal
-import org.gradle.api.internal.TaskOutputsInternal
+import org.gradle.api.internal.tasks.TaskOutputsInternal
 import org.gradle.api.internal.project.DefaultProject
 import org.gradle.api.internal.tasks.TaskStateInternal
 import org.gradle.api.specs.Spec

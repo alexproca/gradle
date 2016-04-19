@@ -15,7 +15,7 @@
  */
 package org.gradle.language.nativeplatform.internal.incremental
 import org.gradle.api.internal.TaskInternal
-import org.gradle.api.internal.TaskOutputsInternal
+import org.gradle.api.internal.tasks.TaskOutputsInternal
 import org.gradle.api.internal.changedetection.changes.DiscoveredInputRecorder
 import org.gradle.api.internal.file.collections.SimpleFileCollection
 import org.gradle.api.internal.tasks.SimpleWorkResult

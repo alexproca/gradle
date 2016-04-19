@@ -17,7 +17,7 @@
 package org.gradle.tooling.internal.provider.runner
 
 import org.gradle.api.internal.GradleInternal
-import org.gradle.api.internal.TaskOutputsInternal
+import org.gradle.api.internal.tasks.TaskOutputsInternal
 import org.gradle.api.internal.project.ProjectInternal
 import org.gradle.api.internal.tasks.TaskContainerInternal
 import org.gradle.api.specs.Specs

@@ -15,7 +15,7 @@
  */
 package org.gradle.language.base.internal.tasks;
 
-import org.gradle.api.internal.TaskOutputsInternal;
+import org.gradle.api.internal.tasks.TaskOutputsInternal;
 
 import java.io.File;
 

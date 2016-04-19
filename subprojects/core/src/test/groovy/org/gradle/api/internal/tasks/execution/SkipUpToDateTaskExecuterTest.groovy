@@ -20,7 +20,7 @@ import org.gradle.api.Action
 import org.gradle.api.Task
 import org.gradle.api.internal.TaskExecutionHistory
 import org.gradle.api.internal.TaskInternal
-import org.gradle.api.internal.TaskOutputsInternal
+import org.gradle.api.internal.tasks.TaskOutputsInternal
 import org.gradle.api.internal.changedetection.TaskArtifactState
 import org.gradle.api.internal.changedetection.TaskArtifactStateRepository
 import org.gradle.api.internal.changedetection.state.CachingTreeVisitor

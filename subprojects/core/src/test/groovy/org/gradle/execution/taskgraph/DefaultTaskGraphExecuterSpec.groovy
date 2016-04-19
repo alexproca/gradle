@@ -22,7 +22,7 @@ import org.gradle.api.execution.TaskExecutionListener
 import org.gradle.api.execution.internal.InternalTaskExecutionListener
 import org.gradle.api.execution.internal.TaskOperationInternal
 import org.gradle.api.internal.TaskInternal
-import org.gradle.api.internal.TaskOutputsInternal
+import org.gradle.api.internal.tasks.TaskOutputsInternal
 import org.gradle.api.internal.tasks.TaskExecuter
 import org.gradle.api.internal.tasks.TaskStateInternal
 import org.gradle.api.tasks.TaskDependency

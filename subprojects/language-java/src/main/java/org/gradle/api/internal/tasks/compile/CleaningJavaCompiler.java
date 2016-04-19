@@ -16,7 +16,7 @@
 package org.gradle.api.internal.tasks.compile;
 
 import org.gradle.api.AntBuilder;
-import org.gradle.api.internal.TaskOutputsInternal;
+import org.gradle.api.internal.tasks.TaskOutputsInternal;
 import org.gradle.internal.Factory;
 import org.gradle.language.base.internal.compile.Compiler;
 import org.gradle.language.base.internal.tasks.SimpleStaleClassCleaner;

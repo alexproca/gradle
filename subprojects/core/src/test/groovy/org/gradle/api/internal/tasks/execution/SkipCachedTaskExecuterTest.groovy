@@ -20,7 +20,7 @@ import com.google.common.hash.HashCode
 import org.gradle.api.Project
 import org.gradle.api.file.FileCollection
 import org.gradle.api.internal.TaskInternal
-import org.gradle.api.internal.TaskOutputsInternal
+import org.gradle.api.internal.tasks.TaskOutputsInternal
 import org.gradle.api.internal.changedetection.taskcache.*
 import org.gradle.api.internal.tasks.TaskExecuter
 import org.gradle.api.internal.tasks.TaskExecutionContext
@@ -37,14 +37,14 @@ public class SkipCachedTaskExecuterTest extends Specification {
     def taskState = Mock(TaskStateInternal)
     def taskContext = Mock(TaskExecutionContext)
     def taskResultCache = Mock(TaskResultCache)
-    def taskResultPacker = Mock(TaskResultPacker)
+    def taskResultPacker = Mock(TaskOutputPacker)
     def taskInputHasher = Mock(TaskInputHasher)
     def cacheKey = Mock(HashCode)
 
     def executer = new SkipCachedTaskExecuter(taskResultCache, taskResultPacker, taskInputHasher, delegate)
 
     def "skip task when cached results exist"() {
-        def cachedResult = Mock(TaskResultInput)
+        def cachedResult = Mock(TaskOutputReader)
 
         when:
         executer.execute(task, taskState, taskContext)
@@ -64,7 +64,7 @@ public class SkipCachedTaskExecuterTest extends Specification {
     }
 
     def "executes task when no cached result is available"() {
-        def cachedResult = Mock(TaskResultOutput)
+        def cachedResult = Mock(TaskOutputWriter)
 
         when:
         executer.execute(task, taskState, taskContext)
@@ -86,7 +86,7 @@ public class SkipCachedTaskExecuterTest extends Specification {
 
         then:
         1 * outputs.getFiles() >> outputFiles
-        1 * taskResultPacker.pack(projectDir, outputFiles) >> cachedResult
+        1 * taskResultPacker.createWriter(projectDir, outputFiles) >> cachedResult
         1 * taskResultCache.put(cacheKey, cachedResult)
         0 * _
     }

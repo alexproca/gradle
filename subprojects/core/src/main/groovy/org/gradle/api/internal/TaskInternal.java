@@ -20,6 +20,7 @@ import org.gradle.api.Action;
 import org.gradle.api.Task;
 import org.gradle.api.internal.tasks.ContextAwareTaskAction;
 import org.gradle.api.internal.tasks.TaskExecuter;
+import org.gradle.api.internal.tasks.TaskOutputsInternal;
 import org.gradle.api.internal.tasks.TaskStateInternal;
 import org.gradle.api.internal.tasks.execution.TaskValidator;
 import org.gradle.api.specs.Spec;

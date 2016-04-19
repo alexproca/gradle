@@ -17,7 +17,7 @@
 package org.gradle.internal.service.scopes;
 
 import org.gradle.api.internal.TaskInternal;
-import org.gradle.api.internal.TaskOutputsInternal;
+import org.gradle.api.internal.tasks.TaskOutputsInternal;
 import org.gradle.api.internal.file.FileResolver;
 import org.gradle.api.internal.project.ProjectInternal;
 import org.gradle.api.internal.tasks.DefaultTaskInputs;
