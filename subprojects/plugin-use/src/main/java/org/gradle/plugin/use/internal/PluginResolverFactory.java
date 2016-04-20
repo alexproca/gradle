@@ -16,13 +16,17 @@
 
 package org.gradle.plugin.use.internal;
 
+import org.gradle.api.Action;
 import org.gradle.api.internal.DocumentationRegistry;
+import org.gradle.api.internal.file.FileLookup;
+import org.gradle.api.internal.file.FileResolver;
 import org.gradle.api.internal.plugins.PluginRegistry;
 import org.gradle.internal.Factory;
 import org.gradle.plugin.use.resolve.internal.*;
 import org.gradle.plugin.use.resolve.service.internal.InjectedClasspathPluginResolver;
 import org.gradle.plugin.use.resolve.service.internal.PluginResolutionServiceResolver;
 
+import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -31,21 +35,24 @@ public class PluginResolverFactory implements Factory<PluginResolver> {
     private final PluginRegistry pluginRegistry;
     private final DocumentationRegistry documentationRegistry;
     private final PluginResolutionServiceResolver pluginResolutionServiceResolver;
-    private final CustomRepositoryPluginResolver customRepositoryPluginResolver;
+    private DefaultPluginRepositoryHandler pluginRepositoryHandler;
     private final InjectedClasspathPluginResolver injectedClasspathPluginResolver;
+    private FileLookup fileLookup;
 
     public PluginResolverFactory(
             PluginRegistry pluginRegistry,
             DocumentationRegistry documentationRegistry,
             PluginResolutionServiceResolver pluginResolutionServiceResolver,
-            CustomRepositoryPluginResolver customRepositoryPluginResolver,
-            InjectedClasspathPluginResolver injectedClasspathPluginResolver
+            DefaultPluginRepositoryHandler pluginRepositoryHandler,
+            InjectedClasspathPluginResolver injectedClasspathPluginResolver,
+            FileLookup fileLookup
     ) {
         this.pluginRegistry = pluginRegistry;
         this.documentationRegistry = documentationRegistry;
         this.pluginResolutionServiceResolver = pluginResolutionServiceResolver;
-        this.customRepositoryPluginResolver = customRepositoryPluginResolver;
+        this.pluginRepositoryHandler = pluginRepositoryHandler;
         this.injectedClasspathPluginResolver = injectedClasspathPluginResolver;
+        this.fileLookup = fileLookup;
     }
 
     public PluginResolver create() {
@@ -64,7 +71,7 @@ public class PluginResolverFactory implements Factory<PluginResolver> {
      *     <li>{@link NoopPluginResolver} - Only used in tests.</li>
      *     <li>{@link CorePluginResolver} - distributed with Gradle</li>
      *     <li>{@link InjectedClasspathPluginResolver} - from a TestKit test's ClassPath</li>
-     *     <li>{@link CustomRepositoryPluginResolver} - from custom Maven/Ivy repositories</li>
+     *     <li>{@link CustomRepositoryPluginResolver}s - from custom Maven/Ivy repositories</li>
      *     <li>{@link PluginResolutionServiceResolver} - from Gradle Plugin Portal</li>
      * </ol>
      * <p>
@@ -79,7 +86,30 @@ public class PluginResolverFactory implements Factory<PluginResolver> {
             resolvers.add(injectedClasspathPluginResolver);
         }
 
-        resolvers.add(customRepositoryPluginResolver);
+        addPluginRepositoryResolvers(resolvers);
         resolvers.add(pluginResolutionServiceResolver);
+    }
+
+    private void addPluginRepositoryResolvers(List<PluginResolver> resolvers) {
+        //use a system property until we have the `pluginRepositores` block
+        final String customRepoUrl = System.getProperty("org.gradle.plugin.repoUrl");
+        if (customRepoUrl != null) {
+            /*
+             * this is a workaround for the fact that this code runs in a
+             * context that does not have a base dir, so the identity file resolver is used.
+             * That resolver cannot deal with relative paths. We use the current working dir
+             * as a workaround. In the final implementation, the `pluginRepositories` block
+             * will be executed in a context that has a base dir.
+             */
+            FileResolver urlResolver = fileLookup.getFileResolver(new File("").getAbsoluteFile());
+            final String normalizedUrl = urlResolver.resolveUri(customRepoUrl).toString();
+            PluginRepositoryInternal mavenPluginRepository = pluginRepositoryHandler.maven(new Action<DefaultMavenPluginRepository>() {
+                @Override
+                public void execute(DefaultMavenPluginRepository mavenPluginRepository) {
+                    mavenPluginRepository.setUrl(normalizedUrl);
+                }
+            });
+            resolvers.add(mavenPluginRepository.asResolver());
+        }
     }
 }
