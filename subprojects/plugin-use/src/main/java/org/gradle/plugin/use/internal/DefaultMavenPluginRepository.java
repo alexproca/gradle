@@ -29,10 +29,13 @@ import java.net.URI;
 
 class DefaultMavenPluginRepository implements PluginRepositoryInternal {
 
+
+    private final FileResolver fileResolver;
+    private final DependencyResolutionServices dependencyResolutionServices;
+    private final VersionSelectorScheme versionSelectorScheme;
+
     private Object url;
-    private FileResolver fileResolver;
-    private DependencyResolutionServices dependencyResolutionServices;
-    private VersionSelectorScheme versionSelectorScheme;
+    private PluginResolver resolver;
 
     DefaultMavenPluginRepository(FileResolver fileResolver, DependencyResolutionServices dependencyResolutionServices, VersionSelectorScheme versionSelectorScheme) {
         this.fileResolver = fileResolver;
@@ -50,17 +53,23 @@ class DefaultMavenPluginRepository implements PluginRepositoryInternal {
     }
 
     public void setUrl(Object url) {
+        if (resolver != null) {
+            throw new IllegalStateException("The url of a plugin repository cannot be changed after it has been used to resolve plugins.");
+        }
         this.url = url;
     }
 
     @Override
     public PluginResolver asResolver() {
-        dependencyResolutionServices.getResolveRepositoryHandler().maven(new Action<MavenArtifactRepository>() {
-            @Override
-            public void execute(MavenArtifactRepository mavenArtifactRepository) {
-                mavenArtifactRepository.setUrl(url);
-            }
-        });
-        return new CustomRepositoryPluginResolver(dependencyResolutionServices, versionSelectorScheme);
+        if (resolver == null) {
+            dependencyResolutionServices.getResolveRepositoryHandler().maven(new Action<MavenArtifactRepository>() {
+                @Override
+                public void execute(MavenArtifactRepository mavenArtifactRepository) {
+                    mavenArtifactRepository.setUrl(url);
+                }
+            });
+            resolver = new CustomRepositoryPluginResolver(dependencyResolutionServices, versionSelectorScheme);
+        }
+        return resolver;
     }
 }

@@ -35,9 +35,9 @@ public class PluginResolverFactory implements Factory<PluginResolver> {
     private final PluginRegistry pluginRegistry;
     private final DocumentationRegistry documentationRegistry;
     private final PluginResolutionServiceResolver pluginResolutionServiceResolver;
-    private DefaultPluginRepositoryHandler pluginRepositoryHandler;
+    private final DefaultPluginRepositoryHandler pluginRepositoryHandler;
     private final InjectedClasspathPluginResolver injectedClasspathPluginResolver;
-    private FileLookup fileLookup;
+    private final FileLookup fileLookup;
 
     public PluginResolverFactory(
             PluginRegistry pluginRegistry,

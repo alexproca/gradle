@@ -98,6 +98,11 @@ public class CustomRepositoryPluginResolver implements PluginResolver {
         return getRepository().getName();
     }
 
+    /*
+     * Right now we only support a single Maven repository.
+     * This will be changed soon, so that this class just takes
+     * an existing repository and does not need to inspect its URL or name.
+     */
     private MavenArtifactRepository getRepository() {
         return (MavenArtifactRepository) resolution.getResolveRepositoryHandler().get(0);
     }
